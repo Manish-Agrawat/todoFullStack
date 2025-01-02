@@ -21,12 +21,11 @@ const Header = () => {
   async function logout() {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/users/logout",
+        "https://todofullstack-yuny.onrender.com/api/users/logout",
         {
           withCredentials: true,
         }
       );
-     
 
       if (response.data.success) {
         toast.success("Logged Out Successfully!");

@@ -26,7 +26,7 @@ const TodoPage = () => {
     const fetchTodos = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/todo/getAllTodos",
+          "https://todofullstack-yuny.onrender.com/api/todo/getAllTodos",
           { withCredentials: true }
         );
 
@@ -80,7 +80,7 @@ const TodoPage = () => {
       let response;
       if (currentTodoId) {
         response = await axios.put(
-          `http://localhost:5000/api/todo/update/${currentTodoId}`, // API endpoint
+          `https://todofullstack-yuny.onrender.com/api/todo/update/${currentTodoId}`, // API endpoint
           formData,
           {
             headers: {
@@ -91,7 +91,7 @@ const TodoPage = () => {
         );
       } else {
         response = await axios.post(
-          "http://localhost:5000/api/todo/create", // API endpoint
+          "https://todofullstack-yuny.onrender.com/api/todo/create", // API endpoint
           formData,
           {
             headers: {
@@ -129,7 +129,7 @@ const TodoPage = () => {
   const handleDelete = async (todoId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/todo/delete/${todoId}`, // API endpoint
+        `https://todofullstack-yuny.onrender.com/api/todo/delete/${todoId}`, // API endpoint
         {
           withCredentials: true, // If you need credentials (auth token, etc.)
         }

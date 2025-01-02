@@ -1,9 +1,9 @@
 import axios from "axios";
 
 export async function authToken(req, res) {
-    try {
+  try {
     const response = await axios.get(
-      "http://localhost:5000/api/users/token-verify",
+      "https://todofullstack-yuny.onrender.com/api/users/token-verify",
       {
         withCredentials: true,
       }
@@ -13,6 +13,4 @@ export async function authToken(req, res) {
   } catch (error) {
     return false; // Returns false if the token is invalid
   }
-};
-
- 
+}
