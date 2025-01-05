@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../style/HomeSection.css";
 import { Link } from "react-router-dom";
+import { authToken } from "../../utils/Auth";
 
 const HomePage = () => {
+  // checl login or not
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+    const checkAuth = async () => {
+      const isValid = await authToken();
+      setIsAuthenticated(isValid.valid);
+    };
+    checkAuth();
+  }, []);
+
   return (
     <div className="home-page">
       <div className="home-section">
@@ -24,12 +35,11 @@ const HomePage = () => {
         </div>
 
         <div className="action-button">
-          <Link to="/login" className="btn">
+          <Link to={isAuthenticated ? "/create" : "/login"} className="btn">
             Create To-Do List
           </Link>
         </div>
       </div>
-      
     </div>
   );
 };

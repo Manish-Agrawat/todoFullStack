@@ -9,19 +9,14 @@ import Home from "./Pages/Home";
 import TodoFullPage from "./Pages/TodoFullPage";
 import ProtectedRoute from "../utils/ProtectedRoute";
 import PublicRoute from "../utils/PublicRoute";
+import RequestPasswordReset from "./components/RequestPasswordReset";
+import ResetPassword from "./components/ResetPassword";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <PublicRoute>
-              <Home />
-            </PublicRoute>
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route
           path="/login"
           element={
@@ -44,6 +39,22 @@ const App = () => {
             <ProtectedRoute>
               <TodoFullPage />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <PublicRoute>
+              <RequestPasswordReset />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/reset-password/:token"
+          element={
+            <PublicRoute>
+              <ResetPassword />
+            </PublicRoute>
           }
         />
       </Routes>

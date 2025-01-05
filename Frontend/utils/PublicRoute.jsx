@@ -9,8 +9,8 @@ const PublicRoute = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const valid = await authToken();
-      setIsAuthenticated(valid);
+      const isValid = await authToken();
+      setIsAuthenticated(isValid.valid);
     };
 
     checkAuth();

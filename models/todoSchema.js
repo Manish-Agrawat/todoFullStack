@@ -10,10 +10,15 @@ const todoSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-const Todo = mongoose.model('todo', todoSchema);
+const Todo = mongoose.model("todo", todoSchema);
 
 export default Todo;

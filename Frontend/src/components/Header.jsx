@@ -1,41 +1,58 @@
-import React from "react";
-import {
-  Navbar,
-  Nav,
-  Button,
-  Container,
-  Form,
-  NavDropdown,
-} from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Navbar, Nav, NavDropdown, Container, Dropdown } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import "../style/Header.css";
-import toast, { useToaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import axios from "axios";
+import { baseURL } from "../varibles";
+
 const Header = () => {
-  // Custom Navbar Component
-  const loction = useLocation();
+  const [username, setUsername] = useState(null); // State to store username
+
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // State to check if user is logged in
 
-  // logout route handel
+  // Fetch username from backend
 
-  async function logout() {
+  const fetchUser = async () => {
     try {
-      const response = await axios.get(
-        "https://todofullstack-yuny.onrender.com/api/users/logout",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`${baseURL}/api/users/token-verify`, {
+        withCredentials: true,
+      });
+
+      if (response.data.valid) {
+        setUsername(response.data.userInfo.username); // Set username
+        setIsLoggedIn(false); // Set isLoggedIn to true
+      }
+    } catch (error) {
+     
+      setUsername(null); // Reset username on error
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, [isLoggedIn]); // Fetch user when location changes
+
+  // Logout handler
+  const logout = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/api/users/logout`, {
+        withCredentials: true,
+      });
 
       if (response.data.success) {
         toast.success("Logged Out Successfully!");
+        setUsername(null); // Clear username on logout
+        setIsLoggedIn(true);
         navigate("/");
       }
     } catch (error) {
       toast.error("Failed to logout");
-      console.log(error);
+      console.error(error);
     }
-  }
+  };
+
   return (
     <Navbar expand="lg" className="custom-navbar">
       <Container fluid>
@@ -50,15 +67,11 @@ const Header = () => {
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           {/* Navigation Links */}
-          <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: "100px" }}
-            navbarScroll
-          >
+          <Nav className="me-auto my-2 my-lg-0" navbarScroll>
             <Nav.Link as={Link} to="/">
               Home
             </Nav.Link>
-            {loction.pathname === "/" && (
+            {isLoggedIn && (
               <NavDropdown title="Sign Up/Sign In" id="navbarScrollingDropdown">
                 <NavDropdown.Item as={Link} to="/login">
                   Login
@@ -68,24 +81,19 @@ const Header = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             )}
-
-            {loction.pathname === "/create" && (
-              <Nav.Link as={Link} onClick={logout}>
-                Logout
-              </Nav.Link>
-            )}
           </Nav>
 
-          {/* Search Form */}
-          {/* <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form> */}
+          {/* User Info */}
+          {username && (
+            <Dropdown align="end" className="user-dropdown">
+              <Dropdown.Toggle variant="outline-primary" id="user-dropdown">
+                {username}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

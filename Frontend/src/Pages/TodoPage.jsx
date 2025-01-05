@@ -7,6 +7,7 @@ import "../style/Todopage.css";
 
 // import Loder from "../components/Loder";
 import Loder2 from "../components/Loder2";
+import { baseURL } from "../varibles";
 
 const TodoPage = () => {
   const [todos, setTodos] = useState([]);
@@ -26,7 +27,7 @@ const TodoPage = () => {
     const fetchTodos = async () => {
       try {
         const response = await axios.get(
-          "https://todofullstack-yuny.onrender.com/api/todo/getAllTodos",
+          `${baseURL}/api/todo/getAllTodos`,
           { withCredentials: true }
         );
 
@@ -80,7 +81,7 @@ const TodoPage = () => {
       let response;
       if (currentTodoId) {
         response = await axios.put(
-          `https://todofullstack-yuny.onrender.com/api/todo/update/${currentTodoId}`, // API endpoint
+          `${baseURL}/api/todo/update/${currentTodoId}`, // API endpoint
           formData,
           {
             headers: {
@@ -91,7 +92,7 @@ const TodoPage = () => {
         );
       } else {
         response = await axios.post(
-          "https://todofullstack-yuny.onrender.com/api/todo/create", // API endpoint
+          `${baseURL}/api/todo/create`, // API endpoint
           formData,
           {
             headers: {
@@ -129,7 +130,7 @@ const TodoPage = () => {
   const handleDelete = async (todoId) => {
     try {
       const response = await axios.delete(
-        `https://todofullstack-yuny.onrender.com/api/todo/delete/${todoId}`, // API endpoint
+        `${baseURL}/api/todo/delete/${todoId}`, // API endpoint
         {
           withCredentials: true, // If you need credentials (auth token, etc.)
         }

@@ -3,7 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap
 import "../style/Rigister.css"; //  custom CSS
 import axios from "axios";
 import toast, { useToaster } from "react-hot-toast";
-import { Link , useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { baseURL } from "../varibles";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ const Register = () => {
     email: "",
     password: "",
   });
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,16 +25,12 @@ const Register = () => {
     e.preventDefault();
     // Handle form submission logic here
     try {
-      let res = await axios.post(
-        "https://todofullstack-yuny.onrender.com/api/users/register",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      let res = await axios.post(`${baseURL}/api/users/register`, formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
       if (res.data.success) {
         toast.success(res.data.message);
         setTimeout(() => {

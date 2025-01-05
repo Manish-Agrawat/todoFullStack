@@ -11,7 +11,7 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       const isValid = await authToken();
-      setIsAuthenticated(isValid);
+      setIsAuthenticated(isValid.valid);
     };
     checkAuth();
   }, []);

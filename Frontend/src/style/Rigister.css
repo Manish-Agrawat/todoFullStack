@@ -139,6 +139,7 @@ body {
 }
 
 .signup-prompt a {
+  margin-left: 5px;
   color: #6c63ff; /* Sets the link color (customize this as per your theme) */
   text-decoration: none; /* Removes underline from the link */
   font-weight: bold; /* Makes the link text bold */

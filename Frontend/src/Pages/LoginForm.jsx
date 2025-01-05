@@ -6,6 +6,7 @@ import toast, { useToaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 // import Loder from "../components/Loder";
 import Loder2 from "../components/Loder2";
+import { baseURL } from "../varibles";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -30,16 +31,12 @@ const LoginForm = () => {
 
     setLoading(true); // Set loading
     try {
-      let res = await axios.post(
-        "https://todofullstack-yuny.onrender.com/api/users/login",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      let res = await axios.post(`${baseURL}/api/users/login`, formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
       if (res.data.success) {
         toast.success(res.data.message);
 
@@ -113,6 +110,10 @@ const LoginForm = () => {
                     <input type="submit" className="butt" value="Login" />
                     <p className="signup-prompt">
                       Don’t have an account?<Link to="/register">New user</Link>
+                    </p>
+                    <p className="signup-prompt">
+                      Forgot your password?{" "}
+                      <Link to="/forgot-password">Reset it here</Link>.
                     </p>
                   </form>
                 </div>
