@@ -92,8 +92,8 @@ export async function deleteTodoController(req, res) {
 
 export async function getAllTodosController(req, res) {
   try {
-    const _id = req.userId;
-    const todos = await Todo.find({_id});
+    const id = req.userId;
+    const todos = await Todo.find({userId: id});
     if (!todos) {
       return res.status(200).json({
         success: false,
